@@ -1,41 +1,36 @@
 const http = require("http");
 const https = require("https");
 
-function getContentTypeFromResponse ({ res }) {
-  const headers = res.headers;
-  const contentType = headers['content-type'] || headers['Content-Type'] || headers['CONTENT-TYPE'];
-  return contentType;
-}
-
-function getContentType ({ debug, url }) {
+function getContentType ({ debug, destroy=true, follow=false, url }) {
   return new Promise((resolve, reject) => {
     if (debug) console.log("[get-content-type] starting with url " + url);
 
     const { protocol } = new URL(url);
 
-    if (protocol === "https:") {
-      const req = https.get(url, res => {
-        const contentType = getContentTypeFromResponse({ res });
+    const httpx = protocol === "https:" ? https : http;
+
+    const req = httpx.get(url, res => {
+      const { headers, statusCode } = res;
+
+      if (debug) console.log("[get-content-type] statusCode:", statusCode2);
+      if (follow && statusCode === 301) {
+        const loc = headers.location || headers.LOCATION || headers.Location;
+        if (debug) console.log("[get-content-type] loc:", loc);
         req.destroy();
-        resolve({ contentType, protocol });
-      }).on('error', (e) => {
-        console.error(e);
-        reject(error);
-      });
-    } else if (protocol === "http:") {
-      const req = http.get(url, res => {
-        const contentType = getContentTypeFromResponse({ res });
-        req.destroy();
-        resolve({ contentType, protocol });
-      }).on('error', (e) => {
-        console.error(e);
-        reject(error);
-      });
-    }
+        if (debug) console.log("[get-content-type] destroyed req");
+        resolve(getContentType({ debug, destroy, follow, url: loc }));
+      }
+
+      const contentType = headers['content-type'] || headers['Content-Type'] || headers['CONTENT-TYPE'];
+      if (debug) console.log("[get-content-type] contentType:", contentType);
+
+      if (destroy) req.destroy();
+      resolve({ contentType, destroy, follow, headers, protocol, req, statusCode, url });
+    }).on('error', (e) => {
+      console.error(e);
+      reject(error);
+    });
   });
 };
 
-module.exports = {
-  getContentTypeFromResponse,
-  getContentType
-};
+module.exports = { getContentType };
