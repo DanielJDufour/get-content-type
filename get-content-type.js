@@ -12,7 +12,7 @@ function getContentType ({ debug, destroy=true, follow=false, url }) {
     const req = httpx.get(url, res => {
       const { headers, statusCode } = res;
 
-      if (debug) console.log("[get-content-type] statusCode:", statusCode2);
+      if (debug) console.log("[get-content-type] statusCode:", statusCode);
       if (follow && statusCode === 301) {
         const loc = headers.location || headers.LOCATION || headers.Location;
         if (debug) console.log("[get-content-type] loc:", loc);

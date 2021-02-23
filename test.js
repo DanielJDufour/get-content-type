@@ -10,6 +10,9 @@ const { getContentType } = require("./get-content-type");
   equal(contentType1, "text/html; charset=utf-8");
   equal(statusCode1, 200);
 
+  // make sure it runs with debug on
+  await getContentType({ debug: true, url: url1 });
+
   const url2 = "https://s3-us-west-2.amazonaws.com/planet-disaster-data/hurricane-harvey/SkySat_Freeport_s03_20170831T162740Z3.tif";
   const {
     contentType: contentType2,
