@@ -1,0 +1,25 @@
+{
+  "name": "get-content-type",
+  "version": "0.0.0",
+  "description": "Get the Content Type for a URL using a HTTP/S GET Request",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielJDufour/get-content-type.git"
+  },
+  "keywords": [
+    "content-type",
+    "file-type",
+    "http",
+    "mime"
+  ],
+  "author": "Daniel J. Dufour",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/DanielJDufour/get-content-type/issues"
+  },
+  "homepage": "https://github.com/DanielJDufour/get-content-type#readme"
+}
