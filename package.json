@@ -1,8 +1,8 @@
 {
   "name": "get-content-type",
   "version": "0.0.0",
-  "description": "Get the Content Type for a URL using a HTTP/S GET Request",
-  "main": "index.js",
+  "description": "Gets the Content Type for a URL",
+  "main": "get-content-type.js",
   "scripts": {
     "test": "node test.js"
   },
