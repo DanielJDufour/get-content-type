@@ -1,6 +1,6 @@
 {
   "name": "get-content-type",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Gets the Content Type for a URL",
   "main": "get-content-type.js",
   "scripts": {
