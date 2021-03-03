@@ -1,7 +1,7 @@
 const http = require("http");
 const https = require("https");
 
-function getContentType ({ debug, destroy=true, follow=false, url }) {
+function getContentType ({ debug, destroy=true, follow=false, highWaterMark=1024, url }) {
   return new Promise((resolve, reject) => {
     if (debug) console.log("[get-content-type] starting with url " + url);
 
@@ -9,7 +9,10 @@ function getContentType ({ debug, destroy=true, follow=false, url }) {
 
     const httpx = protocol === "https:" ? https : http;
 
-    const req = httpx.get(url, res => {
+    const req = httpx.get(
+      url,
+      { highWaterMark },
+      res => {
       const { headers, statusCode } = res;
 
       if (debug) console.log("[get-content-type] statusCode:", statusCode);

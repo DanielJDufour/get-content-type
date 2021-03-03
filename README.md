@@ -24,3 +24,10 @@ const url = "https://s3-us-west-2.amazonaws.com/planet-disaster-data/hurricane-h
 const { contentType } = await getContentType({ url });
 // contentType is "image/tiff"
 ```
+
+# Advanced Usage
+## Modifying High Water Mark
+The High Water Mark is how many bytes to read before returning the result.  The default is 1024.
+```js
+const { contentType } = await getContentType({ highWaterMark: 512, url });
+```
